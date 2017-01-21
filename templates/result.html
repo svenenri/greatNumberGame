@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Great Number Game</title>
+	</head>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			width: 970px;
+			margin: auto;
+		}
+
+		h1{
+			text-align: center;
+			margin: 25px 0 25px 0;
+		}
+
+		p{
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		form{
+			margin: auto;
+			text-align: center;
+		}
+
+		#results{
+			visibility: hidden;
+		}
+
+		.lowHigh{
+			width: 200px;
+			height: 200px
+			display: inline-block;
+			margin: 20px auto;
+			background-color: red;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+			font-size: 2.5em;
+			border: 2px solid black;
+			padding: 70px;
+		}
+
+		.correct{
+			width: 200px;
+			height: 200px
+			display: inline-block;
+			margin: 20px auto;
+			background-color: green;
+			color: white;
+			text-align: center;
+			font-weight: bold;
+			font-size: 2.5em;
+			border: 2px solid black;
+			padding: 70px;
+			}
+
+	</style>
+	<body>
+		<h1>Welcome to the Great Number Game!</h1>
+		<p>I am thinking of a number between 1 and 100<br> Take a guess!</p>
+		{% if session["response"] == "correct" %}
+
+		{% else %}
+			<form action="/result" method="post">
+				<input type="text" name="guess" placeholder="Ex 26">
+				<input type="submit" name="guess" value="Submit">
+			</form>
+		{% endif %}
+
+		{% if session["response"] == "low" %}
+			<div class="lowHigh">
+				<p>Too low!</p>
+				<!-- <form action="/result" method="post">
+					<input type="submit" name="restart" value="Play Again!">
+				</form> -->
+			</div>
+		{% elif session["response"] == "high" %}
+			<div class="lowHigh">
+				<p>Too high!</p>
+				<!-- <form action="/result" method="post">
+					<input type="submit" name="restart" value="Play Again!">
+				</form> -->
+			</div>
+		{% elif session["response"] == "correct" %}
+			<div class="correct">
+				<p>{{session["answer"]}} was the number!</p>
+				<form action="/">
+					<input type="submit" name="restart" value="Play Again!">
+				</form>
+			</div>
+		{% endif %}
+	</body>
+</html>
